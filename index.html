@@ -1,20 +1,65 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบควิซออนไลน์</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ระบบควิซออนไลน์</title>
+  <!-- เรียกใช้ Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1 style="text-align: center;">Quiz</h1>
-    <div id="timer"><h2>เวลาเหลือ: 60 วินาที</h2></div>
-    <div id="quiz-1">
-        <div id="questions"></div>
-        <button id="submit-btn">ส่งคำตอบ</button>
-        <button id="restart-btn" style="display:none;">เริ่มใหม่</button>
+<body class="bg-gray-100 font-sans">
+  <div class="container mx-auto px-4 py-8">
+    <!-- หัวข้อ Quiz -->
+    <h1 class="text-center text-3xl font-bold mb-6">Quiz</h1>
+    
+    <!-- ส่วนแสดงเวลา -->
+    <div id="timer" class="flex justify-end mb-4">
+      <h2 class="text-lg text-gray-600">
+        เวลาเหลือ: <span id="time-left">60</span> วินาที
+      </h2>
     </div>
 
-    <div id="results" class="result"></div>
-    <script src="script.js"></script>
+    <!-- กล่องหลักของควิซ -->
+    <div id="quiz-1" class="bg-white rounded-lg shadow p-6">
+      <!-- บริเวณคำถาม (questions จะถูก Inject โดย JavaScript) -->
+      <div id="questions" class="space-y-4 mb-6">
+        <!-- ตัวอย่าง:
+        <div>
+          <p class="font-semibold">คำถามที่ 1: ...</p>
+          <label class="block">
+            <input type="radio" name="q1" value="a" class="mr-2"> ตัวเลือก A
+          </label>
+          <label class="block">
+            <input type="radio" name="q1" value="b" class="mr-2"> ตัวเลือก B
+          </label>
+        </div>
+        -->
+      </div>
+
+      <!-- ปุ่มส่งคำตอบและเริ่มใหม่ -->
+      <div class="flex space-x-3">
+        <button 
+          id="submit-btn" 
+          class="px-5 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition-colors"
+        >
+          ส่งคำตอบ
+        </button>
+        <button 
+          id="restart-btn" 
+          class="px-5 py-2 rounded bg-gray-400 text-white hover:bg-gray-500 transition-colors hidden"
+        >
+          เริ่มใหม่
+        </button>
+      </div>
+    </div>
+
+    <!-- บริเวณแสดงผลลัพธ์ -->
+    <div id="results" class="result mt-6 p-4 bg-white rounded-lg shadow">
+      <!-- ข้อความสรุปคะแนนหรือผลลัพธ์จะถูก Inject โดย JavaScript -->
+    </div>
+  </div>
+
+  <!-- สคริปต์หลัก -->
+  <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,67 @@
+/* ตั้งค่าพื้นฐานให้กับ body */
+body {
+    font-family: "TH Sarabun New", Arial, sans-serif;
+    background: #f0f0f0; /* สีพื้นหลัง */
+    margin: 0;
+    padding: 0;
+  }
+
+  /* กล่องหลักของ Quiz */
+  .quiz-container {
+    max-width: 600px; /* ความกว้างสูงสุดของกล่อง */
+    margin: 50px auto; /* จัดกึ่งกลางด้านซ้ายขวา พร้อมเว้นระยะด้านบน */
+    background: #fff; /* พื้นหลังเป็นสีขาว */
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* เงาจางๆ */
+    border-radius: 8px; /* มุมโค้ง */
+  }
+
+  /* ส่วนหัวของ Quiz */
+  .quiz-header {
+    text-align: center; 
+    margin-bottom: 20px;
+  }
+
+  /* ข้อความบอกเวลาที่เหลือ */
+  .time-remaining {
+    color: #666;
+    font-size: 16px;
+    text-align: right;
+    margin-bottom: 20px;
+  }
+
+  /* แต่ละข้อถาม */
+  .question {
+    margin-bottom: 20px;
+  }
+
+  /* หัวข้อคำถาม */
+  .question h3 {
+    margin-bottom: 10px;
+    font-weight: normal;
+    font-size: 18px;
+  }
+
+  /* กลุ่มคำตอบ */
+  .answers label {
+    display: block;
+    margin-bottom: 5px;
+    cursor: pointer; 
+  }
+
+  /* ปุ่มส่งคำตอบ */
+  .submit-btn {
+    display: block;
+    width: 100%;
+    background-color: #007BFF;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .submit-btn:hover {
+    background-color: #0056b3;
+  }

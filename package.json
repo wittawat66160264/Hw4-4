@@ -1,0 +1,26 @@
+{
+  "name": "hw4-4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "dev": "tailwindcss -i ./src/styles/main.css -o ./dist/main.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wittawat66160264/Hw4-4.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wittawat66160264/Hw4-4/issues"
+  },
+  "homepage": "https://github.com/wittawat66160264/Hw4-4#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.17"
+  }
+  
+}
