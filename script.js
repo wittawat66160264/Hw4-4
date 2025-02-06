@@ -1,3 +1,4 @@
+// ตัวอย่างคำถาม
 const quiz = {
     id: "quiz-1",
     questions: [
@@ -27,8 +28,10 @@ const quiz = {
 };
 localStorage.setItem('quiz', JSON.stringify(quiz));
 
-function random(quizId){
-    //parse แปลงให้กลายเป็นออบเจ็กต์ (object) หรือข้อมูลประเภทอื่นๆ ที่สามารถใช้งานใน JavaScript get ดึงข้อมูล
+let timer;
+let timeLeft = quiz.timeLimit;
+
+function random(quizId) {
     const storageQuiz = JSON.parse(localStorage.getItem('quiz'));
 
     if (storageQuiz && storageQuiz.id === quizId) {
@@ -38,47 +41,90 @@ function random(quizId){
     return null;
 }
 
-function submitAnswer(){
-
+function startTimer() {
+    timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timer').innerHTML = `<h2>เวลาเหลือ: ${timeLeft} วินาที</h2>`;
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            submitQuiz();
+        }
+    }, 1000);
 }
-                          //ส่งแปร questions
+
+function submitQuiz() {
+    clearInterval(timer);
+    const questions = quizSession.questions;
+    const answers = questions.map(question => {
+        const selectedAnswer = document.querySelector(`input[name="question${question.id}"]:checked`);
+        return {
+            questionId: question.id,
+            isCorrect: selectedAnswer ? submitAnswer(question.id, selectedAnswer.value) : false
+        };
+    });
+    const score = calculateScore(answers);
+    showResults(score, answers);
+}
+
+function showResults(score, answers) {
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = `<p>คะแนนของคุณ: ${score}%</p>`;
+    answers.forEach(answer => {
+        resultsDiv.innerHTML += `<p>คำถามที่ ${answer.questionId}: ${answer.isCorrect ? 'ถูกต้อง' : 'ผิด'}</p>`;
+    });
+    document.getElementById('submit-btn').style.display = 'none';
+    document.getElementById('restart-btn').style.display = 'block';
+}
+
+function submitAnswer(questionId, answer) {
+    const question = quiz.questions.find(q => q.id === questionId);
+    return question.correct === answer;
+}
+
+function calculateScore(answers) {
+    const totalQuestions = answers.length;
+    const correctAnswers = answers.filter(answer => answer.isCorrect).length;
+    return (correctAnswers / totalQuestions) * 100;
+}
+
 function displayQuestions(questions) {
-                                                // id = questions
     const questionsDiv = document.getElementById('questions');
     questionsDiv.innerHTML = ''; // ล้างคำถามเก่าก่อนแสดงคำถามใหม่
-        //ลูปเพิ่มคำถามทีละข้อ
-    //------------------สร้างคำถาม-----------------------------/ 
-                     //กำหนดตัวแปรใหม่ ไว้ใช้ในการลูป 
+
     questions.forEach(question => {
-                //ตัวแปรเก็บกล่องdiv      //สร้าง div 
         const questionDiv = document.createElement('div');
-        //     <div class="question">
         questionDiv.className = 'question';
-        //      กำหนด html ใน div
         questionDiv.innerHTML = `<p>${question.text}</p>`;
 
-    //------------------สร้างคำตอบ-----------------------------/
-                //ตัวแปรเก็บกล่องdiv      //สร้าง div
         const choicesDiv = document.createElement('div');
-        //       <div class="choices">
         choicesDiv.className = 'choices';
-        //ลูปในลูปที่เป็น question เพราะกำหมดมาใหม่ จากลูปแรก 
         question.choices.forEach(choice => {
-        //    กำหนด html ใน div
             choicesDiv.innerHTML += `
                 <label>
                     <input type="radio" name="question${question.id}" value="${choice}">${choice}
                 </label><br>
             `;
         });
-        //appendChild ใช้เพื่อเพิ่ม ลูก (child) เข้ากับ พ่อ (parent)
-
-        //เพิ่มตัวเลือกลงในคำถาม
         questionDiv.appendChild(choicesDiv);
-        //เพิ่มคำถาม (พร้อมตัวเลือก) ลงในพื้นที่แสดงคำถามทั้งหมด
         questionsDiv.appendChild(questionDiv);
     });
 }
-let questionrandom = random('quiz-1');
-displayQuestions(questionrandom.questions);
 
+function restartQuiz() {
+    document.getElementById('results').innerHTML = '';
+    document.getElementById('submit-btn').style.display = 'block';
+    document.getElementById('restart-btn').style.display = 'none';
+    timeLeft = quiz.timeLimit;
+    document.getElementById('timer').textContent = `เวลาเหลือ: ${timeLeft} วินาที`;
+    quizSession = random('quiz-1');
+    displayQuestions(quizSession.questions);
+    startTimer();
+}
+
+document.getElementById('submit-btn').addEventListener('click', submitQuiz);
+document.getElementById('restart-btn').addEventListener('click', restartQuiz);
+
+// เริ่มควิซด้วยการแสดงคำถาม
+let quizSession = random('quiz-1');
+displayQuestions(quizSession.questions);
+startTimer();

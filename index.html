@@ -1,16 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบควิซออนไล</title>
+    <title>ระบบควิซออนไลน์</title>
 </head>
 <body>
     <h1 style="text-align: center;">Quiz</h1>
+    <div id="timer"><h2>เวลาเหลือ: 60 วินาที</h2></div>
     <div id="quiz-1">
         <div id="questions"></div>
+        <button id="submit-btn">ส่งคำตอบ</button>
+        <button id="restart-btn" style="display:none;">เริ่มใหม่</button>
     </div>
+
+    <div id="results" class="result"></div>
     <script src="script.js"></script>
 </body>
-
 </html>
